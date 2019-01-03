@@ -1,13 +1,19 @@
-FROM php:7-cli-alpine
+FROM golang:1-alpine
 
-COPY --from=nninja/grpc:latest /usr/local/bin/grpc_php_plugin /usr/local/bin/grpc_php_plugin
+RUN apk --update add git
+
+RUN go get -u github.com/golang/protobuf/protoc-gen-go \
+    && go get -u github.com/golang/protobuf/proto \
+    && go get -u google.golang.org/grpc
+
+ENV PATH $PATH:$GOPATH/bin:/usr/local/bin
+
 COPY --from=nninja/grpc:latest /usr/local/bin/protoc /usr/local/bin/protoc
 
 # libstdc++ is required for running protoc binary
 RUN apk add --update --no-cache libstdc++ \
     && rm -rf /var/cache/apk/*
 
-#
 # Pre-built `protoc` binary will not run on Alpine due to missing of `glibc`,
 # so we need to install `glibc` first.
 # Thanks to:
@@ -33,8 +39,3 @@ RUN apk add --update --no-cache -t deps wget ca-certificates \
     && apk del --purge deps \
     && rm -rf /tmp/* /var/cache/apk/*
 
-ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV COMPOSER_HOME=/opt/composer/
-ENV PATH /opt/composer/bin:$PATH
-
-COPY --from=composer:1.8 /usr/bin/composer /usr/bin/composer
