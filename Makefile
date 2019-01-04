@@ -10,4 +10,7 @@ go:
 node:
 	docker build -t nninja/grpc:node -f ./node/Dockerfile .
 
-all: core php go node
+web:
+	docker build -t nninja/grpc:web -f ./web/Dockerfile .
+
+all: core php go node web
