@@ -1,3 +1,15 @@
+FROM golang:1-alpine as doc-builder
+
+RUN apk add --no-cache build-base curl automake autoconf libtool git zlib-dev
+
+ARG PROTOC_GEN_DOC_VERSION=1.1.0
+RUN mkdir -p ${GOPATH}/src/github.com/pseudomuto/protoc-gen-doc \
+    && curl -L https://github.com/pseudomuto/protoc-gen-doc/archive/v${PROTOC_GEN_DOC_VERSION}.tar.gz | tar xvz --strip 1 -C ${GOPATH}/src/github.com/pseudomuto/protoc-gen-doc
+
+RUN cd ${GOPATH}/src/github.com/pseudomuto/protoc-gen-doc \
+        && make build \
+        && install -c ${GOPATH}/src/github.com/pseudomuto/protoc-gen-doc/protoc-gen-doc /usr/local/bin/
+
 FROM golang:1-alpine
 
 RUN apk --update add git
@@ -19,3 +31,5 @@ ENV PATH $PATH:$GOPATH/bin:/usr/local/bin
 COPY protoc.sh /usr/local/bin/protoc.sh
 
 RUN sh /usr/local/bin/protoc.sh
+
+COPY --from=doc-builder /usr/local/bin/protoc-gen-doc /usr/local/bin/protoc-gen-doc
