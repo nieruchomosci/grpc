@@ -1,13 +1,15 @@
 #!/usr/bin/env sh
 
-PROTOBUF_REVISION=${PROTOBUF_REVISION:-"3.6.2"}
+set -e
+
+PROTOBUF_REVISION=${PROTOBUF_REVISION:-"3.6.1"}
 GLIBC_VERSION=${GLIBC_VERSION:-"2.23-r3"}
 ALPINE_GLIBC_URL=${ALPINE_GLIBC_URL:-"https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/"}
 GLIBC_PKG=${GLIBC_PKG:-"glibc-${GLIBC_VERSION}.apk"}
 GLIBC_BIN_PKG=${GLIBC_BIN_PKG:-"glibc-bin-${GLIBC_VERSION}.apk"}
 
 apk add --no-cache curl \
-    && curl -sLO https://github.com/google/protobuf/releases/download/v${PROTOBUF_REVISION}/protoc-${PROTOBUF_REVISION}-linux-x86_64.zip \
+    && curl -sLO https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOBUF_REVISION}/protoc-${PROTOBUF_REVISION}-linux-x86_64.zip \
     && unzip protoc-${PROTOBUF_REVISION}-linux-x86_64.zip -d /usr/local \
     && chmod +x /usr/local/bin/protoc \
     && chmod -R 755 /usr/local/include/ \
