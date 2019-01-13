@@ -30,6 +30,13 @@ The simplest way to use them is coping a binary file from the external image e.g
 COPY --from=nninja/grpc:latest /usr/local/bin/grpc_php_plugin /usr/local/bin/grpc_php_plugin
 ``` 
 
+# gRPC & protoc
+
+In order to generate gRPC stubs and protobuf messages for the specific language you can use the images provided by this repository.
+
+A gRPC sample service can be found under `examples` directories. 
+To generate service definition and protobuf messages just run `./generate.sh`. An output can be found under `examples/output`
+
 # Contributing
 
 Any help and PRs are kindly welcome. Do not hestitate to report the issue or just send me a feedback.
