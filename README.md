@@ -7,10 +7,12 @@ The repository contains docker images to generate gRPC client/server definitions
 ## Tags 
 * `latest` - tag is a large image that contains all compiled plugins binaries
 * `php` - is based on `php:7-cli-alpine` image and includes only necessary libs and binaries. It's much smaller than `latest` version.
-* `node` - is based on `node:11` image and includes [grpc-tools](https://www.npmjs.com/package/grpc-tools) and [protobuf.js](https://dcode.io/protobuf.js/)
+* `node` - is based on `node:11-alpine` image and includes [grpc-tools](https://www.npmjs.com/package/grpc-tools) and [protobuf.js](https://dcode.io/protobuf.js/)
 * `go` - is based on `golang:1-alpine` image and includes:
   * `github.com/golang/protobuf/{protoc-gen-go,proto}`
   * `google.golang.org/grpc`
+* `ts` - is based on `node:11-alpine` image
+* `web` - is based on `node:11-alpine` image
 
 More details can be found under apropriate subfolders.
 

@@ -20,5 +20,9 @@ node:
 web:
 	docker build -t nninja/grpc:web -f ./web/Dockerfile .
 
+.PHONY: ts
+ts:
+	docker build -t nninja/grpc:ts -f ./ts/Dockerfile .
+
 .PHONY: all
-all: core php go node web
+all: core php go node web es6
