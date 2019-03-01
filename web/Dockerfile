@@ -1,7 +1,7 @@
 FROM node:11-alpine
 
 RUN npm install -g --unsafe-perm=true --allow-root \
-    ts-protoc-gen \
+    ts-protoc-gen@0.9.0 \
     google-protobuf
 
 ENV PATH "$PATH:/root/.npm/bin/"
