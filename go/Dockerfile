@@ -26,6 +26,12 @@ RUN go get github.com/golang/protobuf/protoc-gen-go \
     && go get google.golang.org/grpc \
     && git -C "$(go env GOPATH)"/src/google.golang.org/grpc checkout $GRPC_TAG
 
+RUN go get github.com/nieruchomosci/protoc-gen-gotag \
+    && go install github.com/nieruchomosci/protoc-gen-gotag \
+    && go build github.com/nieruchomosci/protoc-gen-gotag \
+    && chmod +x protoc-gen-gotag \
+    && mv protoc-gen-gotag /usr/local/bin/protoc-gen-gotag
+
 ENV PATH $PATH:$GOPATH/bin:/usr/local/bin
 
 COPY protoc.sh /usr/local/bin/protoc.sh
