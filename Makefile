@@ -24,5 +24,9 @@ web:
 ts:
 	docker build -t nninja/grpc:ts -f ./ts/Dockerfile .
 
+.PHONY: ruby
+ruby:
+	docker build -t nninja/grpc:ruby -f ./ruby/Dockerfile .
+
 .PHONY: all
 all: core php go node web es6
