@@ -46,8 +46,10 @@ echo -e "Generating gRPC go ..."
 output="./output/go"
 mkdir -p ${output}
 docker run -it --rm -v $PWD:/app -w /app nninja/grpc:go \
-        protoc -I. \
+    protoc -I. \
         --go_out="plugins=grpc:${output}" \
+        --grpc-gateway_out="logtostderr=true:${output}" \
+        --swagger_out="logtostderr=true:${output}" \
         --plugin=protoc-gen-grpc=protoc-gen-go \
         sample.proto
 

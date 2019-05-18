@@ -15,10 +15,13 @@ FROM golang:1-alpine
 RUN apk --update add git
 
 # A Protocol Buffer version
-ARG PROTO_TAG=v1.2.0
+ARG PROTO_TAG=v1.3.1
 
 # A gRPC library version.
-ARG GRPC_TAG=v1.17.0
+ARG GRPC_TAG=v1.20.1
+
+# A gRPC Gateway verison
+ARG GRPC_GATEWAY_TAG=v1.9.0
 
 RUN go get github.com/golang/protobuf/protoc-gen-go \
     && git -C "$(go env GOPATH)"/src/github.com/golang/protobuf checkout $PROTO_TAG \
@@ -31,6 +34,11 @@ RUN go get github.com/nieruchomosci/protoc-gen-gotag \
     && go build github.com/nieruchomosci/protoc-gen-gotag \
     && chmod +x protoc-gen-gotag \
     && mv protoc-gen-gotag /usr/local/bin/protoc-gen-gotag
+
+RUN go get github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
+    && git -C "$(go env GOPATH)"/src/github.com/grpc-ecosystem/grpc-gateway checkout $GRPC_GATEWAY_TAG \
+    && go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
+    && go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 
 ENV PATH $PATH:$GOPATH/bin:/usr/local/bin
 

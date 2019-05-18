@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/api/annotations.proto";
+
 package sample;
 
 message Request {
@@ -12,5 +14,9 @@ message Response {
 
 service SampleService {
     rpc ask(Request) returns (Response) {
+        option (google.api.http) = {
+            post: "/v1/sample/ask"
+            body: "*"
+        };
     }
 }
